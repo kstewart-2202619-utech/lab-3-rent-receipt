@@ -1,0 +1,272 @@
+<!-- Name: Krystal Stewart
+ ID: 2202619
+Lab 3 : Rent Receipt Generator  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Receipt Generator</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <h1>RENT RECEIPT GENERATOR</h1>
+        <p>Professional Property Management Solutions</p>
+    </header>
+
+    <main>
+
+        <!-- ========================= -->
+        <!-- FORM SECTION -->
+        <!-- ========================= -->
+        <section class="form-section">
+            <h2 class="section-title">
+                <span class="material-icons">edit_note</span>
+                Receipt Information
+            </h2>
+
+            <form id="receiptForm">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Receipt Number *</label>
+                        <input type="text" id="receiptNumber" required maxlength="20" placeholder="RR-2025-001">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Receipt Date *</label>
+                        <input type="date" id="receiptDate" required>
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <span class="material-icons">person</span>
+                    Tenant Information
+                </h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Tenant Name *</label>
+                        <input type="text" id="tenantName" required maxlength="100" placeholder="John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Landlord Name *</label>
+                        <input type="text" id="landlordName" required maxlength="100" placeholder="Jane Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="tenantEmail" maxlength="100" placeholder="tenant@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="tenantPhone" maxlength="15" placeholder="(876) 555-1234">
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <span class="material-icons">home</span>
+                    Property Information
+                </h2>
+
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label>Property Address *</label>
+                        <textarea id="propertyAddress" required maxlength="200" placeholder="123 Main Street, Apt 4B, Kingston, Jamaica"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rent Period *</label>
+                        <input type="text" id="rentPeriod" required maxlength="50" placeholder="January 2025 - March 2025" >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rent Amount (JMD) *</label>
+                        <input type="number" id="rentAmount" required min="0" step="0.01"  placeholder="50000.00">
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <span class="material-icons">payments</span>
+                    Payment Details
+                </h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Payment Method *</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select Method</option>
+                            <option>Debit Card</option>
+                            <option>Credit Card</option>
+                            <option>Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payment Date *</label>
+                        <input type="date" id="paymentDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Transaction Ref</label>
+                        <input type="text" id="transactionRef" maxlength="50" placeholder="TRX123456">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label>Notes</label>
+                        <textarea id="notes" maxlength="300"></textarea>
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <span class="material-icons">draw</span>
+                    Signature
+                </h2>
+
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label>Signature *</label>
+                        <input type="text" id="signature" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" onclick="generateReceipt()">
+                        <span class="material-icons">receipt</span> Generate Receipt
+                    </button>
+
+                    <button type="reset" class="btn-secondary">
+                        <span class="material-icons">refresh</span>
+                        Clear Form
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+        <!-- ========================= -->
+        <!-- RECEIPT PREVIEW -->
+        <!-- ========================= -->
+        <section class="receipt-section" id="receiptSection">
+            <div class="button-group">
+                <button onclick="printReceipt()">
+                    <span class="material-icons">print</span> Print Receipt
+                </button>
+
+                <button onclick="alert('Download Receipt')" class="btn-secondary">
+                    <span class="material-icons">download</span> Download PDF
+                </button>
+
+                <button onclick="alert('Email Receipt')" class="btn-secondary">
+                    <span class="material-icons">email</span> Email Receipt
+                </button>
+            </div>
+
+            <div class="receipt" id="receipt">
+
+                <div class="receipt-header">
+                    <h2>RENT RECEIPT</h2>
+                    <div id="displayReceiptNumber">Receipt #: RR-2025-001</div>
+                    <div id="displayReceiptDate">Date: January 1, 2025</div>
+                </div>
+
+                <div class="receipt-body">
+                    <div class="receipt-row">
+                        <span class="receipt-label">Received From:</span>
+                        <span id="displayTenantName">John Doe</span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="receipt-label">Property Address:</span>
+                        <span id="displayPropertyAddress">123 Main Street</span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="receipt-label">Rent Period:</span>
+                        <span id="displayRentPeriod">January 2025</span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="receipt-label">Payment Method:</span>
+                        <span id="displayPaymentMethod">Cash</span>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span class="receipt-label">Payment Date:</span>
+                        <span id="displayPaymentDate">January 1, 2025</span>
+                    </div>
+
+                    <div class="receipt-row" id="transactionRow" style="display:none;">
+                        <span class="receipt-label">Transaction Ref:</span>
+                        <span id="displayTransactionRef"></span>
+                    </div>
+
+                    <div class="receipt-row" id="notesRow" style="display:none;">
+                        <span class="receipt-label">Notes:</span>
+                        <span id="displayNotes"></span>
+                    </div>
+                </div>
+
+                <div class="receipt-amount" id="displayRentAmount">
+                    JMD $50,000.00
+                </div>
+
+                <div class="receipt-footer">
+                    <p>Thank you for your payment</p>
+
+                  
+                    <div class="signature-line" id="displaySignature">Digital/Typed Signature</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================= -->
+        <!-- RECEIPT HISTORY -->
+        <!-- ========================= -->
+        <section class="history-section">
+            <div class="history-header">
+                <h2>
+                    <span class="material-icons">history</span>
+                    Receipt History
+                </h2>
+
+                <button onclick="deleteAllReceipts()" class="btn-delete-all">
+                    <span class="material-icons">delete_sweep</span>
+                    Delete All
+                </button>
+            </div>
+
+            <div id="historyList" class="history-list">
+                <p class="no-history">No receipts yet. Generate your first receipt!</p>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- External JavaScript -->
+<script src="script.js"></script>
+
+</body>
+</html>
